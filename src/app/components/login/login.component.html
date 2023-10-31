@@ -1,0 +1,28 @@
+<div class="login-container d-flex justify-content-center align-items-center">
+    <mat-card class="card login-card">
+      <img src="path-to-your-logo.png" alt="zChat Logo" class="card-img-top logo">
+      <div class="card-body">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="form-floating">
+            <input class="form-control" formControlName="username" placeholder="Username" required>
+            <label for="username">Username</label>
+          </div>
+          <div class="form-floating">
+            <input class="form-control" type="password" formControlName="password" placeholder="Password" required>
+            <label for="password">Password</label>
+          </div>
+          <div class="login-button">
+          <button class="btn btn-primary btn-block" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer">
+        <mat-card-actions>
+            <a href="#" (click)="onForgotPassword()">forgot password</a>
+            <div style="margin-left: auto;"> don't have an account? <a href="#" (click)="onRegister()">Register</a>
+            </div>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+  </div>
+  
