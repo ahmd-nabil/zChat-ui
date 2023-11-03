@@ -11,11 +11,13 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { MyRxStompService } from './services/my-rx-stomp.service';
 import { myRxStompServiceFactory } from './my-rx-stomp-service-factory';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

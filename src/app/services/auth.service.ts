@@ -22,7 +22,8 @@ export class AuthService {
         passcode: `{noop}${password}`,
       }
     })
-    this.myRxStomp.activate()
+    this.myRxStomp.activate();
+    this.myRxStomp.watch({destination: '/user/queue/messages'}).subscribe(messages => {console.log("TODO change to add to ui");console.log(messages);})
   }
 
 }
