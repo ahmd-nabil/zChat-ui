@@ -25,6 +25,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.get('username')!.value, this.loginForm.get('password')!.value);
   }
 
+  loginWithGmail() {
+    this.authService.loginWithGmail();
+  }
+  
   onForgotPassword() {
     console.log('forgot')
   }

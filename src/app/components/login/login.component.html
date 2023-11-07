@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <div class="login-container d-flex justify-content-center align-items-center">
     <mat-card class="card login-card">
       <img src="path-to-your-logo.png" alt="zChat Logo" class="card-img-top logo">
@@ -12,7 +13,13 @@
             <label for="password">Password</label>
           </div>
           <div class="login-button">
-          <button class="btn btn-primary btn-block" type="submit">Login</button>
+          <button class="btn btn-primary" type="submit" style="width:200px;height:42px">Sign in with zChat</button>
+          <div class="google-btn" (click)="loginWithGmail()">
+            <div class="google-icon-wrapper">
+              <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+            </div>
+            <p class="btn-text"><b>Sign in with google</b></p>
+          </div>
           </div>
         </form>
       </div>
@@ -25,4 +32,6 @@
       </div>
     </mat-card>
   </div>
+
+  <script src="https://accounts.google.com/gsi/client"></script>
   
