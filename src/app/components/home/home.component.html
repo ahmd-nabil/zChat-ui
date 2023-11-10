@@ -1,1 +1,55 @@
-<p>home works!</p>
+<div class="container-fluid content body">
+
+    <mat-sidenav-container style="height: 100vh;">
+        <mat-sidenav mode="side" opened class="sidenav">
+            <!-- Sidenav content -->
+            <div class="sidenav-item">
+                <img src="https://via.placeholder.com/40" alt="Profile Image">
+                <h3>username 1</h3>
+                <p>last message</p>
+            </div>
+            <div class="sidenav-item">
+                <img src="https://via.placeholder.com/40" alt="Profile Image">
+                <h3 class="row col">username 1</h3>
+                <p class="row col">last message</p>
+            </div>
+            <div class="sidenav-item">
+                <img src="https://via.placeholder.com/40" alt="Profile Image">
+                <h3 class="row col">username 1</h3>
+                <p class="row col">last message</p>
+            </div>
+        </mat-sidenav>
+      
+        <mat-sidenav-content>
+            <div class="chat-container">
+                <div class="header">
+                    <img src="https://via.placeholder.com/30" alt="User Image">
+                    <div>User Name</div>
+                </div>
+                <div class="messages">
+                    <div class="message">Hello!</div>
+                    <div class="message">Hi there!</div>
+                    <!-- Add more messages as needed -->
+                </div>
+                <div class="chatbox">
+                    <input type="text" class="chatbox-input" placeholder="Type your message...">
+                    <button class="chatbox-btn">Send</button>
+                </div>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+<!--
+<mat-list>
+    @for (message of messages; track message) {
+      <mat-list-item>
+        <img matListItemAvatar src="..." alt="...">
+        <h3 matListItemTitle>{{message.from}}</h3>
+        <p matListItemLine>
+          <span>{{message.subject}}</span>
+          <span class="demo-2"> -- {{message.content}}</span>
+        </p>
+      </mat-list-item>
+    }
+  </mat-list>
+  -->
