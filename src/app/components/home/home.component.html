@@ -2,21 +2,11 @@
 
     <mat-sidenav-container style="height: 100vh;">
         <mat-sidenav mode="side" opened class="sidenav">
-            <!-- Sidenav content -->
-            <div class="sidenav-item">
+            <!-- Chat list -->
+            <div class="chat-item" *ngFor="let chat of chats" (click)="openChat(chat.id!)">
                 <img src="https://via.placeholder.com/40" alt="Profile Image">
-                <h3>username 1</h3>
+                <h3> {{ chat.chatName }}</h3>
                 <p>last message</p>
-            </div>
-            <div class="sidenav-item">
-                <img src="https://via.placeholder.com/40" alt="Profile Image">
-                <h3 class="row col">username 1</h3>
-                <p class="row col">last message</p>
-            </div>
-            <div class="sidenav-item">
-                <img src="https://via.placeholder.com/40" alt="Profile Image">
-                <h3 class="row col">username 1</h3>
-                <p class="row col">last message</p>
             </div>
         </mat-sidenav>
       
@@ -27,9 +17,11 @@
                     <div>User Name</div>
                 </div>
                 <div class="messages">
-                    <div class="message">Hello!</div>
-                    <div class="message">Hi there!</div>
-                    <!-- Add more messages as needed -->
+                        <div 
+                        *ngFor="let message of messages"
+                        [ngClass]="message.sender?.subject == myClaims.sub ? 'sent' : 'received'">
+                            {{ message.content }}
+                        </div>    
                 </div>
                 <div class="chatbox">
                     <input type="text" class="chatbox-input" placeholder="Type your message...">

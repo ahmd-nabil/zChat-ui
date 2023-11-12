@@ -1,18 +1,18 @@
   .sidenav {
     min-height: 80vh;
     min-width: 30vw;
-    background-color: #673ab7; /* Deep Purple color */
+    background-color: #128C7E; /* Deep Purple color */
     color: #fff;
   }
 
-  .sidenav-item {
+  .chat-item {
     padding: 10px;
     border-bottom: 1px solid #512da8; /* Darken the color for border */
     display: flex;
     align-items: center;
   }
 
-  .sidenav-item img {
+  .chat-item img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -20,7 +20,7 @@
   }
 
   .content {
-    margin: 50px;
+    padding: 50px;
   }
 
   .chat-container {
@@ -50,37 +50,52 @@
 
   .messages {
     padding: 10px;
-  }
-
-  .message {
-    background-color: #dcf8c6; /* Light green for sender's messages */
-    border-radius: 8px;
-    margin-bottom: 10px;
-    max-width: fit-content;
-    padding: 10px;
-  }
-
-  .chatbox {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-top: 1px solid #ddd;
+    flex-direction: column;
   }
 
-  .chatbox-input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
+  /* Style for sender's messages */
+.sent {
+  display: flex;
+  background-color: #cfe2f3; /* Light blue for sender's messages */
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: fit-content;
+  padding: 10px;
+  align-self: end; /* Align messages to the right */
+}
 
-  .chatbox-btn {
-    margin-left: 10px;
-    background-color: #128C7E;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+/* Style for receiver's messages */
+.received {
+  display: flex;
+  background-color: #dcf8c6; /* Light green for sender's messages */
+  border-radius: 8px;
+  margin-bottom: 10px;
+  max-width: fit-content;
+  padding: 10px;
+}
+
+.chatbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.chatbox-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.chatbox-btn {
+  margin-left: 10px;
+  background-color: #128C7E;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
