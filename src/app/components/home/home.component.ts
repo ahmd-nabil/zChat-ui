@@ -1,6 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { tick } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { ChatMessage } from 'src/app/model/chat-message.model';
+import { Chat } from 'src/app/model/chat.model';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
@@ -9,10 +12,39 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  
-  constructor(private authService: AuthService, private chatService: ChatService, private http: HttpClient) {}
+  myClaims : any;
+  chats : Chat[] = [];
+  messages : ChatMessage[] = [];
+
+  constructor(
+    private chatService: ChatService,
+    private oauthService: OAuthService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private changeDetection: ChangeDetectorRef
+  ) {}
+
   ngOnInit(): void {
-    this.authService.name();
-    this.http.get("http://localhost:8080/private", {headers: {"Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImY1ZjRiZjQ2ZTUyYjMxZDliNjI0OWY3MzA5YWQwMzM4NDAwNjgwY2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4OTk2MzU3NTAwNzgtdHByc3NxOThyYW1kanBqbm8yOG04NDBjb2NxbG84dTQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI4OTk2MzU3NTAwNzgtdHByc3NxOThyYW1kanBqbm8yOG04NDBjb2NxbG84dTQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0NTgxMzc4MjU1OTAzODY1NTgiLCJlbWFpbCI6ImFobWVkLm5hYmlsMjk5OTlAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJpeUpkU2JMa1BwQzNJUk94V29DS3NBIiwibm9uY2UiOiJiV0YyZFVrdVUzRjFURzFxTUdSS1FXazFZMFZVZUZBemIyVTJheTFDZVVGWk1VaHZSVkkxWW5sQlJHbEoiLCJuYmYiOjE2OTkzNjQ2MTcsIm5hbWUiOiJBaG1lZCBOYWJpbCIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQ2c4b2NKUldhbnNqSUVzLVB6NFFKUWI3ZzQtRVZYdm1JYlY2NGtUcUctSGRzd2o9czk2LWMiLCJnaXZlbl9uYW1lIjoiQWhtZWQiLCJmYW1pbHlfbmFtZSI6Ik5hYmlsIiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2OTkzNjQ5MTcsImV4cCI6MTY5OTM2ODUxNywianRpIjoiZmRiMDZlOTdlYTk0OTkzN2M3MDExMDJhZWNhYTE4MmM0MzQ0OWNhZCJ9.XijVokGL5fTHr1_0_ehpAd5fVbuD-0Bry1yZO5yRp4iQt1S73NUO1IyvhQ5YttKjasm8HipSpCcfuKVddHBqOOsq96UJgV7pF2tN-1xrN6UqSDllYtuOKRcZydfYlnGuY_1T8J_-hkgrPU9BFFuDYduHJFScTtdbxOz7oFD4YemT0CHeGck9dejs0WxQdi8pJajppE9OphdUJrekfFzPoGi_dN2wrR_Lmh6OfNfIrvakKGTHtqv-1a0O9eMrk0ttWNR8dQZNvr4IGt6Doc8IoitskEQ5JrIbiSDOcy4DqP6vEMLzg7JP0Zjh54ebVY4E3SOcS6-22G8ETpcsUpmheQ"}}).subscribe();
+    this.myClaims = this.oauthService.getIdentityClaims();
+    this.chatService.oldChatsSubject.subscribe(result => {
+      if(result) {
+        this.chats.push(result);
+        console.log(this.chats);
+        console.log(this.myClaims)
+      }
+    });
+
+    this.route.queryParams.subscribe(queryParams => {
+      console.log('called');
+      const chatParam = queryParams['chat'];
+      const chatId = +chatParam;
+      this.messages = this.chats.find(chat => (chat.id == chatId))!.chatMessages;
+      this.changeDetection.detectChanges();
+      this.chatService.chatMessageSubjectMap.get(chatId)?.subscribe(newMessage => this.messages.push(newMessage));
+    });
+  }
+
+  openChat(id : number) {
+    this.router.navigate(['/home'], {queryParams: {'chat': id}});
   }
 }
