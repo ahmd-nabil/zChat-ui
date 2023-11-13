@@ -12,15 +12,13 @@ export class AuthService {
   authenticated = new BehaviorSubject(false);
 
   constructor(
-    private http: HttpClient,
-    private myRxStomp: MyRxStompService,
-    private oauthService: OAuthService) { }
+    private oauthService: OAuthService
+  ) { }
 
 
 // ONLY LOGIN WITH GOOGLE FOR NOW (TODO implement username, password loging)
   login(username: string, password: string) {
     // TODO make a post request, on success send a CONNECT message with JWT
-    this.oauthService.initLoginFlow();
 
     /** Adding header configs for stomp and connecting to ws server */
     // this.myRxStomp.configure({
@@ -44,7 +42,6 @@ export class AuthService {
   public name() {
     let claims = this.oauthService.getIdentityClaims();
     if (!claims) return null;
-    console.log(claims);
     return claims['given_name'];
   }
 }

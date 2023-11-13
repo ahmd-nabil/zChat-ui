@@ -10,22 +10,22 @@
             </div>
         </mat-sidenav>
       
-        <mat-sidenav-content>
+        <mat-sidenav-content *ngIf="this.chatId">
             <div class="chat-container">
                 <div class="header">
                     <img src="https://via.placeholder.com/30" alt="User Image">
-                    <div>User Name</div>
+                    <div>{{ receiver?.email }}</div>
                 </div>
                 <div class="messages">
                         <div 
                         *ngFor="let message of messages"
-                        [ngClass]="message.sender?.subject == myClaims.sub ? 'sent' : 'received'">
+                        [ngClass]="message.senderSubject == myClaims.sub ? 'sent' : 'received'">
                             {{ message.content }}
                         </div>    
                 </div>
                 <div class="chatbox">
-                    <input type="text" class="chatbox-input" placeholder="Type your message...">
-                    <button class="chatbox-btn">Send</button>
+                    <input type="text" class="chatbox-input" placeholder="Type your message..." #newMessage>
+                    <button class="chatbox-btn" (click)="sendMessage(newMessage)">Send</button>
                 </div>
             </div>
         </mat-sidenav-content>
