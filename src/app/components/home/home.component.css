@@ -20,17 +20,16 @@
   }
 
   .content {
-    padding: 50px;
+    padding: 20px 20px 10px 20px;
   }
 
   .chat-container {
-    min-width: 600px;
-    max-width: 1200px;
     margin-left: 10px;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
+    height: 100%;
   }
 
   .header {
@@ -52,6 +51,8 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+    height: 500px;
   }
 
   /* Style for sender's messages */
@@ -95,7 +96,7 @@
   background-color: #128C7E;
   color: #fff;
   border: none;
-  padding: 8px 12px;
+  /* padding: 8px 12px; */
   border-radius: 4px;
   cursor: pointer;
 }

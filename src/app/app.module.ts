@@ -8,13 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MyRxStompService } from './services/my-rx-stomp.service';
 import { myRxStompServiceFactory } from './my-rx-stomp-service-factory';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatCardModule,
@@ -33,6 +35,7 @@ import { MatListModule } from '@angular/material/list';
     OAuthModule.forRoot(),
     MatSidenavModule,
     MatListModule,
+    MatIconModule
   ],
   providers: [
     {

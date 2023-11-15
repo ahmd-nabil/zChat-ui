@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -15,13 +15,18 @@ import { ChatService } from 'src/app/services/chat.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewChecked   {
   myClaims : any;
   chats : ChatResponse[] = [];
   messages : MessageResponse[] = [];
   chatId : number | null = null;
   currentChat : ChatResponse | undefined;
   receiver: ChatUser | undefined;
+  msgContent = ''
+  
+  @ViewChild('messagesBox')
+  messagesBox!: ElementRef;
+
   constructor(
     private chatService: ChatService,
     private oauthService: OAuthService,
@@ -53,16 +58,20 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+  
+  ngAfterViewChecked(): void {
+    this.scrollToLastMessage();
+  }
 
   openChat(id : number) {
     this.router.navigate(['/home'], {queryParams: {'chat': id}});
   }
 
-  sendMessage(newMessageInput : HTMLInputElement) {
+  sendMessage() {
     const newMessage : MessageRequest = 
     {
       chatId: this.chatId,
-      content: newMessageInput.value,
+      content: this.msgContent,
       senderSubject: this.oauthService.getIdentityClaims()['sub'],
       receiverSubject: this.receiver!.subject!,
       id: null,
@@ -70,6 +79,15 @@ export class HomeComponent implements OnInit {
       receiverId: null
     };
     this.chatService.sendMessage(newMessage);
-    newMessageInput.value = '';
+    this.msgContent = '';
   }
+
+  scrollToLastMessage() {
+    try {
+      this.messagesBox.nativeElement.scrollTop = this.messagesBox.nativeElement.scrollHeight;
+    }catch(error) {
+      console.log(error);
+    }
+  }
+  
 }
