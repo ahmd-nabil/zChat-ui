@@ -16,6 +16,11 @@ import { HomeComponent } from './components/home/home.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { DateFnsConfigurationService, DateFnsModule, FormatDistanceToNowPipeModule } from 'ngx-date-fns';
+import { enUS, arEG } from "date-fns/locale";
+
+const FnsConfiguration = new DateFnsConfigurationService();
+FnsConfiguration.setLocale(enUS);
 
 @NgModule({
   declarations: [
@@ -35,13 +40,15 @@ import { MatIconModule } from '@angular/material/icon';
     OAuthModule.forRoot(),
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    DateFnsModule.forRoot(),
   ],
   providers: [
     {
       provide: MyRxStompService,
       useFactory: myRxStompServiceFactory,
     },
+    { provide: DateFnsConfigurationService, useValue: FnsConfiguration },
   ],
   bootstrap: [AppComponent]
 })
