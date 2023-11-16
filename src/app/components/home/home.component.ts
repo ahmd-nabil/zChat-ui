@@ -1,11 +1,9 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ChatMessage } from 'src/app/model/chat-message.model';
 import { ChatResponse } from 'src/app/model/chat-response.model';
 import { ChatUser } from 'src/app/model/chat-user.model';
-import { Chat } from 'src/app/model/chat.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
 import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
@@ -42,7 +40,6 @@ export class HomeComponent implements OnInit, AfterViewChecked   {
         this.chats.push(result);
       }
     });
-
     this.route.queryParams.subscribe(queryParams => {
       const chatParam = queryParams['chat'];
       this.chatId = +chatParam;
