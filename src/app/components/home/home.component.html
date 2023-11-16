@@ -6,7 +6,7 @@
             <div class="chat-item" *ngFor="let chat of chats" (click)="openChat(chat.id!)">
                 <img src="https://via.placeholder.com/40" alt="Profile Image">
                 <h3> {{ chat.chatName }}</h3>
-                <p>last message</p>
+                <p>{{ chat.lastMessage.content }}</p>
             </div>
         </mat-sidenav>
       

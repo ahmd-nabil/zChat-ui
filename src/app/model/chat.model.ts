@@ -6,4 +6,5 @@ export interface Chat {
     chatName ?: string;
     chatMessages: ChatMessage[];
     chatUsers: ChatUser[];
+    lastMessage: ChatMessage;
 }

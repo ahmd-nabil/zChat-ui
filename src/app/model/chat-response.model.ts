@@ -6,4 +6,5 @@ export interface ChatResponse {
     chatName ?: string;
     chatMessages: MessageResponse[];
     chatUsers: ChatUser[];
+    lastMessage: MessageResponse;
 }
