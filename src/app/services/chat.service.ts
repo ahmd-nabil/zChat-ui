@@ -38,6 +38,7 @@ export class ChatService {
 
     this.myRxStompService.watch({destination: '/user/queue/messages'}).subscribe(iMessage => {
       const message : MessageResponse = JSON.parse(iMessage.body);
+      this.changeMessageStringsToDate(message);
       const chatId = message.chatId;
       // check if the message belongs to an old chat append it to its array
       if(this.chatMessageSubjectMap.has(chatId)) {
@@ -57,6 +58,7 @@ export class ChatService {
     this.http.get<ChatResponse[]>(`http://localhost:8080/chats`, {headers: {'Authorization': `Bearer ${this.oauthService.getIdToken()}`}}).subscribe(result => {
       result.forEach(chat => {
         chat.chatName = chat.chatUsers.find(user => user.subject != this.oauthService.getIdentityClaims()['sub'])?.name;
+        this.changeChatMessagesStringsToDates(chat);
         this.oldChatsSubject.next(chat);
         this.chatMessageSubjectMap.set(chat.id!, new BehaviorSubject<any>(null));
       });
@@ -75,5 +77,14 @@ export class ChatService {
   
   public isMyMessage(message: MessageResponse): boolean {
     return this.oauthService.getIdentityClaims()['sub'] === message.senderSubject;
+  }
+
+  changeChatMessagesStringsToDates(chatResponse: ChatResponse) {
+    chatResponse.chatMessages.forEach(msg => msg.createdAt = new Date(msg.createdAt));
+    chatResponse.lastMessage.createdAt = new Date(chatResponse.lastMessage.createdAt);
+  }
+
+  changeMessageStringsToDate(message: MessageResponse) {
+    message.createdAt = new Date(message.createdAt);
   }
 }
