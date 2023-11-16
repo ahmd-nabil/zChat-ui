@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit, AfterViewChecked   {
 
   scrollToLastMessage() {
     try {
-      this.messagesBox.nativeElement.scrollTop = this.messagesBox.nativeElement.scrollHeight;
+      if(this.messagesBox) this.messagesBox.nativeElement.scrollTop = this.messagesBox.nativeElement.scrollHeight;
     }catch(error) {
       console.log(error);
     }
