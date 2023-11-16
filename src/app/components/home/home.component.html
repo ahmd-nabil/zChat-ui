@@ -21,10 +21,11 @@
                         *ngFor="let message of messages"
                         [ngClass]="message.senderSubject == myClaims.sub ? 'sent' : 'received'">
                             {{ message.content }}
+                            {{ message.createdAt }}
                         </div>
                 </div>
                 <div class="chatbox">
-                    <input type="text" class="chatbox-input" placeholder="Type your message..." [(ngModel)]="msgContent">
+                    <input type="text" class="chatbox-input" placeholder="Type your message..." [(ngModel)]="msgContent" (keyup.enter)="sendMessage()">
                     <button [disabled]="msgContent.length === 0" (click)="sendMessage()" style="border: transparent;">
                         <mat-icon>send</mat-icon>
                     </button>

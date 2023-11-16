@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { MyRxStompService } from './my-rx-stomp.service';
 import { BehaviorSubject } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { ChatMessage } from '../model/chat-message.model';
-import { Chat } from '../model/chat.model';
 import { MessageRequest } from '../model/new-message-request.model';
 import { ChatResponse } from '../model/chat-response.model';
 import { MessageResponse } from '../model/message-response.model';
@@ -73,6 +71,9 @@ export class ChatService {
   }
 
   private setOldMessages() {
-
+  }
+  
+  public isMyMessage(message: MessageResponse): boolean {
+    return this.oauthService.getIdentityClaims()['sub'] === message.senderSubject;
   }
 }

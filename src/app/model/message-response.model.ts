@@ -6,4 +6,5 @@ export interface MessageResponse {
     chatId: number;
     senderSubject: string;
     receiverSubject: string;
+    createdAt: Date;
 }

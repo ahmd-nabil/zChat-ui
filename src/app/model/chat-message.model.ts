@@ -7,4 +7,5 @@ export interface ChatMessage {
     sender ?: ChatUser;
     receiver ?: ChatUser;
     chat ?: Chat;
+    createdAt: Date;
 }
