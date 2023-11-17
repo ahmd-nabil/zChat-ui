@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MyRxStompService } from './my-rx-stomp.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, retry, retryWhen } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { MessageRequest } from '../model/new-message-request.model';
 import { ChatResponse } from '../model/chat-response.model';
@@ -21,13 +21,12 @@ export class ChatService {
     private oauthService: OAuthService,
     private myRxStompService: MyRxStompService
     ) {
-      this.subscribeToPrivateMessagesQueue();
-      this.setOldChatsArray();  
+      this.setupConnectionsToServer();
     }
 
 
 
-  subscribeToPrivateMessagesQueue() {
+  setupConnectionsToServer() {
     /** Adding header configs for stomp and connecting to ws server */
     this.myRxStompService.configure({
       connectHeaders: {
@@ -36,6 +35,12 @@ export class ChatService {
     });
     this.myRxStompService.activate();
 
+    // once connected pull all old data
+    this.myRxStompService.connected$.subscribe(
+      () => this.setOldChatsArray()
+    )
+    
+    // once connected subscribe to the private queue to get all realtime new messages
     this.myRxStompService.watch({destination: '/user/queue/messages'}).subscribe(iMessage => {
       const message : MessageResponse = JSON.parse(iMessage.body);
       this.changeMessageStringsToDate(message);
@@ -55,13 +60,22 @@ export class ChatService {
   }
 
   private setOldChatsArray() {
-    this.http.get<ChatResponse[]>(`http://localhost:8080/chats`, {headers: {'Authorization': `Bearer ${this.oauthService.getIdToken()}`}}).subscribe(result => {
-      result.forEach(chat => {
-        chat.chatName = chat.chatUsers.find(user => user.subject != this.oauthService.getIdentityClaims()['sub'])?.name;
-        this.changeChatMessagesStringsToDates(chat);
-        this.oldChatsSubject.next(chat);
-        this.chatMessageSubjectMap.set(chat.id!, new BehaviorSubject<any>(null));
-      });
+    this.http.get<ChatResponse[]>(`http://localhost:8080/chats`, {headers: {'Authorization': `Bearer ${this.oauthService.getIdToken()}`}})
+    .subscribe({
+      next: (result) => {
+        result.forEach(chat => {
+          chat.chatName = chat.chatUsers.find(user => user.subject != this.oauthService.getIdentityClaims()['sub'])?.name;
+          this.changeChatMessagesStringsToDates(chat);
+          this.oldChatsSubject.next(chat);
+          this.chatMessageSubjectMap.set(chat.id!, new BehaviorSubject<any>(null));
+        });
+      },
+      error: (error) => {
+        console.log(error);
+        retry({
+          delay: 1000
+        });
+      }
     });
   }
 
