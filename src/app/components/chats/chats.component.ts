@@ -1,7 +1,6 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { ChatMessage } from 'src/app/model/chat-message.model';
 import { ChatResponse } from 'src/app/model/chat-response.model';
 import { ChatUser } from 'src/app/model/chat-user.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
@@ -9,11 +8,11 @@ import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-chats',
+  templateUrl: './chats.component.html',
+  styleUrls: ['./chats.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewChecked   {
+export class ChatsComponent implements OnInit, AfterViewChecked   {
   myClaims : any;
   chats : ChatResponse[] = [];
   messages : MessageResponse[] = [];
@@ -22,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewChecked   {
   receiver: ChatUser | undefined;
   msgContent = ''
   
-  @ViewChild('messagesBox')
+  @ViewChild('scroller')
   messagesBox!: ElementRef;
 
   constructor(
@@ -47,6 +46,7 @@ export class HomeComponent implements OnInit, AfterViewChecked   {
       if(!this.currentChat) return;
       this.messages = this.currentChat!.chatMessages;
       this.receiver = this.currentChat!.chatUsers.find(user => user.subject !== this.oauthService.getIdentityClaims()['sub']);
+      // this.changeDetection.detectChanges();
       this.chatService.chatMessageSubjectMap.get(this.chatId)?.subscribe(newMessage => {
           if(newMessage) {
             this.messages.push(newMessage);
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, AfterViewChecked   {
   }
 
   openChat(id : number) {
-    this.router.navigate(['/home'], {queryParams: {'chat': id}});
+    this.router.navigate(['/chats'], {queryParams: {'chat': id}});
   }
 
   sendMessage() {
