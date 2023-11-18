@@ -1,7 +1,7 @@
 <div class="container-fluid content body">
 
     <mat-sidenav-container style="height: 95vh;">
-        <mat-sidenav mode="side" opened class="sidenav">
+        <mat-sidenav mode="side" opened class="sidenav" disableClose="true">
             <!-- Chat list -->
             <div class="chat-item" *ngFor="let chat of chats" (click)="openChat(chat.id!)">
                 <img src="https://via.placeholder.com/40" alt="Profile Image">
