@@ -54,7 +54,10 @@
                         [ngClass]="{'sent': message.senderSubject == myClaims.sub}">
                         <div 
                         [ngClass]="message.senderSubject == myClaims.sub ? 'chat-bubble chat-bubble--right' : 'chat-bubble chat-bubble--left'">
-                            {{ message.content }}
+                            <div class="msg-content">
+                                {{ message.content }}
+                                <div class="msg-time"><span class="time text-muted small msg-time">12:12</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
