@@ -1,18 +1,19 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Subscription } from 'rxjs';
 import { ChatResponse } from 'src/app/model/chat-response.model';
 import { ChatUser } from 'src/app/model/chat-user.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
 import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
-
+// TODO change the whole subsription model (should be better than that)
 @Component({
   selector: 'app-chats',
   templateUrl: './chats.component.html',
   styleUrls: ['./chats.component.scss']
 })
-export class ChatsComponent implements OnInit, AfterViewChecked   {
+export class ChatsComponent implements OnInit, AfterViewChecked {
   myClaims : any;
   chats : ChatResponse[] = [];
   messages : MessageResponse[] = [];
@@ -21,6 +22,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked   {
   receiver: ChatUser | undefined;
   msgContent = ''
   
+  currentMessagesSub ?: Subscription;
   @ViewChild('scroller')
   messagesBox!: ElementRef;
 
@@ -39,7 +41,11 @@ export class ChatsComponent implements OnInit, AfterViewChecked   {
         this.chats.push(result);
       }
     });
+
     this.route.queryParams.subscribe(queryParams => {
+      if(this.currentMessagesSub) {
+        this.currentMessagesSub.unsubscribe();
+      }
       const chatParam = queryParams['chat'];
       this.chatId = +chatParam;
       this.currentChat = this.chats.find(chat => (chat.id == this.chatId));
@@ -47,7 +53,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked   {
       this.messages = this.currentChat!.chatMessages;
       this.receiver = this.currentChat!.chatUsers.find(user => user.subject !== this.oauthService.getIdentityClaims()['sub']);
       // this.changeDetection.detectChanges();
-      this.chatService.chatMessageSubjectMap.get(this.chatId)?.subscribe(newMessage => {
+      this.currentMessagesSub = this.chatService.chatMessageSubjectMap.get(this.chatId)?.subscribe(newMessage => {
           if(newMessage) {
             this.currentChat!.lastMessage = newMessage;
             this.messages.push(newMessage);
