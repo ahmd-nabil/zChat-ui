@@ -13,7 +13,7 @@ import { MyRxStompService } from './services/my-rx-stomp.service';
 import { myRxStompServiceFactory } from './my-rx-stomp-service-factory';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { DateFnsConfigurationService, DateFnsModule, FormatDistanceToNowPipeModule } from 'ngx-date-fns';
@@ -51,6 +51,7 @@ FnsConfiguration.setLocale(enUS);
       useFactory: myRxStompServiceFactory,
     },
     { provide: DateFnsConfigurationService, useValue: FnsConfiguration },
+    { provide: OAuthStorage, useValue: localStorage}
   ],
   bootstrap: [AppComponent]
 })

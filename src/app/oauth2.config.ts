@@ -5,7 +5,8 @@ export const authConfig: AuthConfig = {
     issuer: 'https://accounts.google.com',
     clientId: '899635750078-tprssq98ramdjpjno28m840cocqlo8u4.apps.googleusercontent.com',
     scope: 'openid email profile',
-    redirectUri: window.location.origin + '/home',
+    redirectUri: window.location.origin + '/chats',
     responseType: 'token id_token',
-    strictDiscoveryDocumentValidation: false
-  };
+    strictDiscoveryDocumentValidation: false,
+    // silentRefreshShowIFrame: true
+};
