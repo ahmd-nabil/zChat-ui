@@ -22,7 +22,7 @@
                 <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
                     alt="">
                 <div class="text">
-                    <h4>{{ chat.chatName }}</h4>
+                    <h5>{{ chat.chatName }}</h5>
                     <p class="text-muted">{{ chat.lastMessage.content }}</p>
                 </div>
                 <span class="time text-muted small">{{ chat.lastMessage.createdAt | dfnsFormat: 'p' }}</span>
@@ -31,13 +31,13 @@
             </div>
         </div>
         <!-- Current Chat Section -->
-        <div class="col-md-8">
+        <div class="col-md-8 current-chat-section">
             <div class="settings-tray">
                 <div class="friend-drawer no-gutters friend-drawer--grey">
                     <img class="profile-image"
                         src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
                     <div class="text">
-                        <h3>{{ receiver?.name }}</h3>
+                        <h4>{{ receiver?.name }}</h4>
                         <!-- <p class="text-muted">Layin' down the law since like before Christ...</p> -->
                     </div>
                     <span class="settings-tray--right">
@@ -61,16 +61,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="chat-box-tray">
-                            <i class="material-icons">sentiment_very_satisfied</i>
-                            <input type="text" placeholder="Type your message here..." [(ngModel)]="msgContent" (keyup.enter)="sendMessage()">
-                            <!-- <i class="material-icons">mic</i> -->
-                            <button [disabled]="msgContent.length === 0" (click)="sendMessage()" style="border: transparent;">
-                                <i class="material-icons">send</i>
-                            </button>
-                        </div>
+                <div class="col-12">
+                    <div class="chat-box-tray">
+                        <i class="material-icons">sentiment_very_satisfied</i>
+                        <input type="text" placeholder="Type your message here..." [(ngModel)]="msgContent" (keyup.enter)="sendMessage()">
+                        <!-- <i class="material-icons">mic</i> -->
+                        <button [disabled]="msgContent.length === 0" (click)="sendMessage()" style="border: transparent;">
+                            <i class="material-icons">send</i>
+                        </button>
                     </div>
                 </div>
             </div>
