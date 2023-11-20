@@ -25,7 +25,7 @@
                     <h4>{{ chat.chatName }}</h4>
                     <p class="text-muted">{{ chat.lastMessage.content }}</p>
                 </div>
-                <span class="time text-muted small">{{ chat.lastMessage.createdAt | dfnsFormatDistanceToNow : {includeSeconds: true, addSuffix : true } }}</span>
+                <span class="time text-muted small">{{ chat.lastMessage.createdAt | dfnsFormat: 'p' }}</span>
             </div>
             <hr>
             </div>
@@ -56,7 +56,7 @@
                         [ngClass]="message.senderSubject == myClaims.sub ? 'chat-bubble chat-bubble--right' : 'chat-bubble chat-bubble--left'">
                             <div class="msg-content">
                                 {{ message.content }}
-                                <div class="msg-time"><span class="time text-muted small msg-time">12:12</span></div>
+                                <div class="msg-time"><span class="time small msg-time">{{ message.createdAt | dfnsFormat: 'p' }}</span></div>
                             </div>
                         </div>
                     </div>

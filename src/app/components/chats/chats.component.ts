@@ -49,8 +49,9 @@ export class ChatsComponent implements OnInit, AfterViewChecked   {
       // this.changeDetection.detectChanges();
       this.chatService.chatMessageSubjectMap.get(this.chatId)?.subscribe(newMessage => {
           if(newMessage) {
+            this.currentChat!.lastMessage = newMessage;
             this.messages.push(newMessage);
-            this.changeDetection.detectChanges();
+            // this.changeDetection.detectChanges();
           }
       });
     });
@@ -65,6 +66,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked   {
   }
 
   sendMessage() {
+    if(!this.msgContent || this.msgContent === "") return;
     const newMessage : MessageRequest = 
     {
       chatId: this.chatId,
