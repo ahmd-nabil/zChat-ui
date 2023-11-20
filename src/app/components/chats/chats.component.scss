@@ -23,23 +23,26 @@ $blue: #74b9ff;
 
 .settings-tray {
   background: #eee;
+  width: 100%;
+  overflow: none;
   padding: 10px 15px;
   border-radius: 7px;
   height: 8vh;
+  display: inline-block;
   .no-gutters {
     padding: 0;
   }
   
   &--right {
     float: right;
-    
+    display: inline-flex;
     i {
       margin-top: 10px;
       font-size: 25px;
       color: grey;
       margin-left: 14px;
       transition: .3s;
-      
+      position: sticky;
       &:hover {
         color: $blue;
         cursor: pointer;
@@ -206,12 +209,12 @@ hr {
 .chat-box-tray {
   background: #eee;
   display: flex;
-  align-items: baseline;
   padding: 10px 15px;
   align-items: center;
   margin-top: 19px;
   bottom: 0;
   height: 6vh;
+  min-height: fit-content;
   border-radius: 5px;
   input {
     margin: 0 10px;
@@ -244,7 +247,8 @@ rtl {
   overflow-y: scroll;
   overflow-x: hidden;
   height: 73vh;
-  position: relative;
+  position: sticky;
+  max-height: 700px;
 }
 
 .send-message-section {
