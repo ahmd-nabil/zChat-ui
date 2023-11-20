@@ -134,10 +134,11 @@ hr {
   position: relative;
   width: fit-content;
   animation: fadeIn 1s ease-in;
-  display: flex;
   direction: ltr;
   box-sizing: border-box;
-
+  max-width: 70%; /* Set a maximum width for the chat bubble */
+  word-wrap: break-word; /* Wrap long words to the next line */
+  display: inline-block;
   &:after {
     content: '';
     position: absolute;
@@ -165,13 +166,19 @@ hr {
 	    border-right: 0;
       margin-right: -20px;
       display: flex;
-      align-self: flex-end;
+    }
+  }
+
+  &--left, &--right {
+    .msg-content {
+      height: fit-content;
     }
   }
 }
 
 .msg-content {
   margin: auto;
+  height: fit-content;
 }
 
 .msg-time {
@@ -190,7 +197,6 @@ hr {
 
 
 .sent {
-  direction: rtl;
   .chat-bubble {
     background: $blue;
     color: #fff;

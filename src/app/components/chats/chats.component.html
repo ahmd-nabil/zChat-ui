@@ -53,9 +53,10 @@
                     <div class="row" *ngFor="let message of messages" 
                         [ngClass]="{'sent': message.senderSubject == myClaims.sub}">
                         <div 
+                        [ngStyle]="message.senderSubject == myClaims.sub? {'margin-left':'auto'}: {}"
                         [ngClass]="message.senderSubject == myClaims.sub ? 'chat-bubble chat-bubble--right' : 'chat-bubble chat-bubble--left'">
                             <div class="msg-content">
-                                {{ message.content }}
+                                <p>{{ message.content }}</p>
                                 <div class="msg-time"><span class="time small msg-time">{{ message.createdAt | dfnsFormat: 'p' }}</span></div>
                             </div>
                         </div>
