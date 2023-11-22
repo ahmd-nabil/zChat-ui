@@ -3,4 +3,6 @@ export interface ChatUser {
     name ?: string;
     email ?: string;
     subject ?: string;
+    lastSeen ?: Date;
+    isOnline ?: boolean;
 }
