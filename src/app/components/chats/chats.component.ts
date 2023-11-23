@@ -7,6 +7,8 @@ import { ChatUser } from 'src/app/model/chat-user.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
 import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
+import { FormatDistanceToNowPipe } from 'ngx-date-fns';
+
 // TODO change the whole subsription model (should be better than that)
 @Component({
   selector: 'app-chats',
@@ -31,7 +33,6 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
     private oauthService: OAuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +41,13 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
       if(result) {
         this.chats.push(result);
       }
+    });
+
+    this.chatService.userStatusSubject.subscribe(status => {
+      this.chats.flatMap(chat => chat.chatUsers).filter(user => user.subject === status?.subject).forEach(user => {
+        user.lastSeen = status?.lastSeen;
+        user.isOnline = status?.isOnline;
+      });
     });
 
     this.route.queryParams.subscribe(queryParams => {
@@ -52,12 +60,10 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
       if(!this.currentChat) return;
       this.messages = this.currentChat!.chatMessages;
       this.receiver = this.currentChat!.chatUsers.find(user => user.subject !== this.oauthService.getIdentityClaims()['sub']);
-      // this.changeDetection.detectChanges();
       this.currentMessagesSub = this.chatService.chatMessageSubjectMap.get(this.chatId)?.subscribe(newMessage => {
           if(newMessage) {
             this.currentChat!.lastMessage = newMessage;
             this.messages.push(newMessage);
-            // this.changeDetection.detectChanges();
           }
       });
     });

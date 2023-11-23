@@ -6,6 +6,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { MessageRequest } from '../model/new-message-request.model';
 import { ChatResponse } from '../model/chat-response.model';
 import { MessageResponse } from '../model/message-response.model';
+import { ChatUserStatus } from '../model/user-status.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,14 @@ export class ChatService {
   // todo keep them seperated chat objects with chat info ie (chatname, photo, last-message, ...) and chatMessages with content, sender, receiver, time, seen, ...
   chatMessageSubjectMap = new Map<number, BehaviorSubject<MessageResponse>>();
   oldChatsSubject = new BehaviorSubject<ChatResponse | null>(null);
+  userStatusSubject = new BehaviorSubject<ChatUserStatus | null>(null);
 
   constructor(
     private http: HttpClient,
     private oauthService: OAuthService,
     private myRxStompService: MyRxStompService
     ) {
+      console.log("CHAT SERVice")
       this.setupConnectionsToServer();
     }
 
@@ -33,8 +36,6 @@ export class ChatService {
         Authorization: `Bearer ${this.oauthService.getIdToken()}`,
       }
     });
-    this.myRxStompService.activate();
-
     // once connected pull all old data
     this.myRxStompService.connected$.subscribe(
       () => this.setOldChatsArray()
@@ -53,6 +54,16 @@ export class ChatService {
       this.chatMessageSubjectMap.set(chatId, new BehaviorSubject<MessageResponse>(message));
       }
     });
+
+    // subscribtion for logged in logged out users
+    this.myRxStompService.watch({destination: '/topic/status'}).subscribe(iMessage => {
+      const userStatus : ChatUserStatus = JSON.parse(iMessage.body);
+      userStatus.lastSeen = new Date(userStatus.lastSeen);
+      this.userStatusSubject.next(userStatus);
+    });
+
+    // initiate the connection with the broker
+    this.myRxStompService.activate();
   }
   
   getChatById(id : number) {
@@ -96,6 +107,7 @@ export class ChatService {
   changeChatMessagesStringsToDates(chatResponse: ChatResponse) {
     chatResponse.chatMessages.forEach(msg => msg.createdAt = new Date(msg.createdAt));
     chatResponse.lastMessage.createdAt = new Date(chatResponse.lastMessage.createdAt);
+    chatResponse.chatUsers.forEach(user => user.lastSeen = new Date(user.lastSeen!));
   }
 
   changeMessageStringsToDate(message: MessageResponse) {
