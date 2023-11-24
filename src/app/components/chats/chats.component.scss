@@ -27,7 +27,7 @@ $blue: #74b9ff;
   overflow: none;
   padding: 10px 15px;
   border-radius: 7px;
-  height: 8vh;
+  // height: 8vh;
   display: inline-block;
   .no-gutters {
     padding: 0;
@@ -246,7 +246,7 @@ rtl {
   display: flex;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 73vh;
+  height: 69vh;
   position: sticky;
   max-height: 700px;
 }

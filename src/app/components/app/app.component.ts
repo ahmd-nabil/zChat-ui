@@ -15,7 +15,7 @@ export class AppComponent {
 
   private configure() {
     this.oauthService.configure(authConfig);
-    this.oauthService.setupAutomaticSilentRefresh({login_hint: this.oauthService.getIdentityClaims()['email']});
+    this.oauthService.setupAutomaticSilentRefresh(/**{login_hint: this.oauthService.getIdentityClaims()['email']}*/);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }

@@ -57,7 +57,7 @@
                         [ngClass]="message.senderSubject == myClaims.sub ? 'chat-bubble chat-bubble--right' : 'chat-bubble chat-bubble--left'">
                             <div class="msg-content">
                                 <p>{{ message.content }}</p>
-                                <div class="msg-time"><span class="time small msg-time">{{ message.createdAt | dfnsFormat: 'p' }}</span></div>
+                                <div class="time msg-time"><span class="time small msg-time text-muted">{{ message.createdAt | dfnsFormat: 'p' }}</span></div>
                             </div>
                         </div>
                     </div>
