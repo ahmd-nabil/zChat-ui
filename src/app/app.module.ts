@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DateFnsConfigurationService, DateFnsModule, FormatDistanceToNowPipeModule } from 'ngx-date-fns';
 import { enUS, arEG } from "date-fns/locale";
 import { ChatsComponent } from './components/chats/chats.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 const FnsConfiguration = new DateFnsConfigurationService();
 FnsConfiguration.setLocale(enUS);
@@ -44,6 +45,7 @@ FnsConfiguration.setLocale(enUS);
     MatListModule,
     MatIconModule,
     DateFnsModule.forRoot(),
+    MatMenuModule,
   ],
   providers: [
     {

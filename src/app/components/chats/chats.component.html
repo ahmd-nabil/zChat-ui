@@ -5,8 +5,21 @@
                 <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/filip.jpg"
                     alt="Profile img">
                 <span class="settings-tray--right">
-                    <i class="material-icons">menu</i>
-                </span>
+                    <!-- <i class="material-icons" [matMenuTriggerFor]="menu">menu</i> -->
+                    <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="Example icon-button with a menu" style="border: 0px;">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #userMenu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>add</mat-icon>
+                        <span>Add contact</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>logout</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                    </mat-menu>
+                    </span>
             </div>
             <div class="search-box col-md-12">
                 <div class="input-wrapper">
@@ -38,10 +51,22 @@
                         <h4>{{ receiver?.name }}</h4>
                         <p class="text-muted">{{ receiver?.isOnline? 'Online' :  receiver?.lastSeen | dfnsFormatDistanceToNow}}</p>
                     </div>
-                    <span class="settings-tray--right">
-                        <i class="material-icons">menu</i>
-                    </span>
                 </div>
+                <span class="settings-tray--right">
+                    <button mat-icon-button [matMenuTriggerFor]="chatMenu" aria-label="Example icon-button with a menu" style="border: 0px;">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #chatMenu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>add</mat-icon>
+                        <span>Add contact</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>logout</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                    </mat-menu>
+                </span>
             </div>
             <!-- Current Chat Messages Section-->
             <div class="chat-panel" *ngIf="this.messages.length !== 0">

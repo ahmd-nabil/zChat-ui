@@ -7,7 +7,6 @@ import { ChatUser } from 'src/app/model/chat-user.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
 import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
-import { FormatDistanceToNowPipe } from 'ngx-date-fns';
 
 // TODO change the whole subsription model (should be better than that)
 @Component({
@@ -23,7 +22,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
   currentChat : ChatResponse | undefined;
   receiver: ChatUser | undefined;
   msgContent = ''
-  
+
   currentMessagesSub ?: Subscription;
   @ViewChild('scroller')
   messagesBox!: ElementRef;
@@ -100,5 +99,5 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
       console.log(error);
     }
   }
-  
+
 }
