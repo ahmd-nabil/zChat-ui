@@ -100,4 +100,8 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  logout() {
+    this.oauthService.logOut();
+  }
+
 }

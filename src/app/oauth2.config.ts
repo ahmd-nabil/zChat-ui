@@ -8,5 +8,6 @@ export const authConfig: AuthConfig = {
     redirectUri: window.location.origin + '/chats',
     responseType: 'token id_token',
     strictDiscoveryDocumentValidation: false,
+    logoutUrl: window.location.origin
     // silentRefreshShowIFrame: true
 };
