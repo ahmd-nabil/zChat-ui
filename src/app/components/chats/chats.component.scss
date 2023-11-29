@@ -258,3 +258,10 @@ rtl {
   height: 60px;
   border-radius: 4px;
 }
+
+
+@media  (max-width: 992px) {
+  .chats-list{
+    display:none !important
+  }
+}
