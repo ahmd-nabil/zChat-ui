@@ -1,4 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Subscription } from 'rxjs';
@@ -7,6 +8,7 @@ import { ChatUser } from 'src/app/model/chat-user.model';
 import { MessageResponse } from 'src/app/model/message-response.model';
 import { MessageRequest } from 'src/app/model/new-message-request.model';
 import { ChatService } from 'src/app/services/chat.service';
+import { FindUserComponent } from '../find-user/find-user.component';
 
 // TODO change the whole subsription model (should be better than that)
 @Component({
@@ -32,6 +34,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
     private oauthService: OAuthService,
     private route: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +105,15 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
 
   logout() {
     this.oauthService.logOut();
+  }
+
+  openSearchUserDialog() {
+    console.log("onClick works")
+    const dialogRef = this.dialog.open(FindUserComponent, {});
+
+    dialogRef.afterClosed().subscribe(chat => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

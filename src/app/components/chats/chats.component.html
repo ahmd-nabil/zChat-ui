@@ -10,7 +10,7 @@
                         <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #userMenu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="openSearchUserDialog()">
                         <mat-icon>add</mat-icon>
                         <span>Add contact</span>
                     </button>
