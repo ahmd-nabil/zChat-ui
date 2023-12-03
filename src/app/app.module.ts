@@ -20,6 +20,8 @@ import { DateFnsConfigurationService, DateFnsModule, FormatDistanceToNowPipeModu
 import { enUS, arEG } from "date-fns/locale";
 import { ChatsComponent } from './components/chats/chats.component';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { FindUserComponent } from './components/find-user/find-user.component';
 
 const FnsConfiguration = new DateFnsConfigurationService();
 FnsConfiguration.setLocale(enUS);
@@ -29,7 +31,8 @@ FnsConfiguration.setLocale(enUS);
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ChatsComponent
+    ChatsComponent,
+    FindUserComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ FnsConfiguration.setLocale(enUS);
     MatIconModule,
     DateFnsModule.forRoot(),
     MatMenuModule,
+    MatDialogModule,
   ],
   providers: [
     {
