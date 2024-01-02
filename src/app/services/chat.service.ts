@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MyRxStompService } from './my-rx-stomp.service';
-import { BehaviorSubject, retry, retryWhen } from 'rxjs';
+import { BehaviorSubject, Observable, retry, retryWhen } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { MessageRequest } from '../model/new-message-request.model';
 import { ChatResponse } from '../model/chat-response.model';
 import { MessageResponse } from '../model/message-response.model';
 import { ChatUserStatus } from '../model/user-status.model';
+import { Chat } from '../model/chat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -112,5 +113,9 @@ export class ChatService {
 
   changeMessageStringsToDate(message: MessageResponse) {
     message.createdAt = new Date(message.createdAt);
+  }
+
+  addNewChat(subjects : string[]): Observable<Chat> {
+    return this.http.post<Chat>("http://localhost:8080/chats", subjects, {headers: {'Authorization': `Bearer ${this.oauthService.getIdToken()}`}});
   }
 }

@@ -42,6 +42,7 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
     this.chatService.oldChatsSubject.subscribe(result => {
       if(result) {
         this.chats.push(result);
+        this.chats.sort((a, b) => b.lastMessage.createdAt.getTime() - a.lastMessage.createdAt.getTime());
       }
     });
 
@@ -108,11 +109,14 @@ export class ChatsComponent implements OnInit, AfterViewChecked {
   }
 
   openSearchUserDialog() {
-    console.log("onClick works")
-    const dialogRef = this.dialog.open(FindUserComponent, {});
-
+    const dialogRef = this.dialog.open(FindUserComponent, {
+      height: '400px',
+      width: '600px',
+    });
     dialogRef.afterClosed().subscribe(chat => {
-      console.log('The dialog was closed');
+      if(chat) {
+        this.chats.push(chat);
+      }
     });
   }
 

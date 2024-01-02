@@ -1,1 +1,6 @@
-<p>find-user works!</p>
+<div class="input-group mb-3">
+    <input [(ngModel)]="email" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button" (click)="addUser()">Add User</button>
+    </div>
+</div>
